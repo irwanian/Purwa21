@@ -47,13 +47,18 @@ class Register extends Component {
                 Axios.get('http://localhost:2000/users?username=' + username)
                 .then((res) => {
                     if(res.data.length > 0){
-                        this.setState({error : 'Username tidak dapat dipakai' ,loading : false})
+                        this.setState({error : 'Username tidak dapat digunakan' ,loading : false})
                     }else{
                         var obj = {username : username , password : password}
                         Axios.post('http://localhost:2000/users' , obj)
                         .then((res) => {
                             console.log(res.data)
                             this.props.registrationSuccess(res.data)
+                            localStorage.setItem('keepRegistered' //key
+                            , res.data.username //get data from username
+                            )
+                            ;
+                            
                         })
                         .catch((err) => {
                             console.log(err)
@@ -85,7 +90,7 @@ class Register extends Component {
             <div className='container'>
             <div className='row justify-content-center mt-5'>
                 <div className='col-md-6'>
-                    <Paper className='p-5'>
+                    <Paper className='p-5 regForm'>
                     <h1> REGISTRATION FORM </h1>
                     <input style={{borderRadius : '25px'}} ref='username' className='form-control mt-3' type='text' placeholder='username' />
                     <input style={{borderRadius : '25px'}} ref='password' className='form-control mt-3' type='password' placeholder='Password Minimal 6 Karakter' />

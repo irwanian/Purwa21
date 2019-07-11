@@ -1,7 +1,7 @@
 import React from 'react'
 import { Table, TableBody, TableCell, TableHead, TableRow, Paper, Container} from '@material-ui/core';
 import Axios from 'axios';
-import {DeleteSharp, Edit, ThreeSixtyTwoTone} from '@material-ui/icons';
+import {DeleteSharp, Edit} from '@material-ui/icons';
 import {Modal, ModalBody, ModalHeader, ModalFooter, FormGroup, Label, Input} from 'reactstrap'
 
 
@@ -77,7 +77,6 @@ class ManageMovie extends React.Component{
                         var movieData = this.state.data
                         movieData.push(res.data)
                         this.setState({data : movieData, openModal : false});
-                        
                     })
                     .catch((err)=>{
                         console.log(err);
@@ -116,7 +115,7 @@ class ManageMovie extends React.Component{
                 var data = {
                     title, sutradara,image,genre,playingAt,duration,sinopsis
                 }
-                Axios.put('http://localhost:2000/movies/' + this.state.selectedEdit , data )
+                Axios.patch('http://localhost:2000/movies/' + this.state.selectedEdit , data )
                 .then((res)=>{
                     var newData = this.state.data
                     newData[id] = res.data
@@ -168,7 +167,9 @@ class ManageMovie extends React.Component{
     }
  
 
-    
+    closeModal = () => {
+        this.setState({openModal : false})
+    }
     
 
     renderTable = () => {

@@ -24,7 +24,7 @@ class MovieDetails extends React.Component {
     onBuyTicket= () =>{
         if(this.props.user.id === 0){
             this.setState({login : false})
-        }
+        }else{this.setState({login : true})}
     }
     
     
@@ -34,6 +34,10 @@ class MovieDetails extends React.Component {
         if(this.state.login === false){
             return(
                 <Redirect to='/login' />
+            )
+        }if(this.state.login === true){
+            return(
+                <Redirect to={{ pathname : '/reservation' , state : this.state.data}} />
             )
         }if(this.state.data === null){
             return(
