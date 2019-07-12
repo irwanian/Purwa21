@@ -9,10 +9,10 @@ import {createStore} from 'redux'
 import {Provider} from 'react-redux'
 import Reducers from './redux/reducers';
 
-const store = createStore(Reducers)
+const storeRed = createStore(Reducers)
 
 ReactDOM.render(
-              <Provider store={store}>
+              <Provider store={storeRed}>
                 <BrowserRouter>
                     <App />
                 </BrowserRouter>

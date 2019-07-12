@@ -61,7 +61,7 @@ class NavBioskop extends React.Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink>{this.props.cartQty}</NavLink>
+                <NavLink style={{fontSize : '20px', color : 'antiqueWhite'}}>{this.props.cartQty}</NavLink>
               </NavItem>
               
             {this.props.loggedAccount === '' ? null :
