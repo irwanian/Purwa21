@@ -10,3 +10,9 @@ export const onLogout = () => {
         type : 'LOG_OUT',       
     }
 }
+
+export const addCart = () => {
+    return{
+        type : 'TAMBAH'
+    }
+}

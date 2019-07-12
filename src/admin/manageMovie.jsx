@@ -3,6 +3,8 @@ import { Table, TableBody, TableCell, TableHead, TableRow, Paper, Container} fro
 import Axios from 'axios';
 import {DeleteSharp, Edit} from '@material-ui/icons';
 import {Modal, ModalBody, ModalHeader, ModalFooter, FormGroup, Label, Input} from 'reactstrap'
+import {connect} from 'react-redux'
+import Errorpage from './../pages/errorpage'
 
 
 class ManageMovie extends React.Component{
@@ -214,6 +216,12 @@ class ManageMovie extends React.Component{
     }
 
     render(){
+        if(this.props.user !== 'irwan'){
+            return(
+                <Errorpage />
+            )
+        }
+
         return(
             <Container fixed>
                 <h1>Manage Movies Page</h1>
@@ -294,4 +302,10 @@ class ManageMovie extends React.Component{
     }
 }
 
-export default ManageMovie;
+const mapStateToProps = (state) =>{
+    return{
+        user : state.user.username
+    }
+}
+
+export default connect(mapStateToProps) (ManageMovie);

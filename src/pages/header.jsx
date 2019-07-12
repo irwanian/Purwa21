@@ -16,6 +16,9 @@ import {connect} from 'react-redux'
 import {onLogout} from '../redux/action'
 import './../../node_modules/font-awesome/css/font-awesome.min.css'
 import {ShoppingCart} from '@material-ui/icons'
+import {addCart } from '../redux/action'
+import Errorpage from './errorpage'
+import {Redirect} from 'react-router-dom'
 
 class NavBioskop extends React.Component {
   constructor(props) {
@@ -35,14 +38,20 @@ class NavBioskop extends React.Component {
   onLoggedOut = () => {
     this.props.onLogout()
     localStorage.removeItem('keepRegistered')
-     
   }
 
 
 
   render() {
+    // if(this.props.loggedAccount === ''){
+    //   return(
+    //     <Redirect to='/' />
+    //   )
+    // }
+    // pakai Redirect semua Navbar Hilang
     
-    return (
+    return(
+
       <div>
         <Navbar style={{backgroundImage : 'linear-gradient(#8360c3, #2ebf91)'}} light expand="md">
           <Link to='/'>
@@ -51,17 +60,37 @@ class NavBioskop extends React.Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
+              <NavItem>
+                <NavLink>{this.props.cartQty}</NavLink>
+              </NavItem>
+              
+            {this.props.loggedAccount === '' ? null :
             <Link to='/cart' >
               <NavItem>
-                <NavLink style={{fontWeight : '200', fontSize: '24px', color : 'antiqueWhite'}}><ShoppingCart  /></NavLink>
+                <NavLink style={{fontWeight : '200', fontSize: '24px', color : 'antiqueWhite'}}> <ShoppingCart  /></NavLink>
               </NavItem>
               </Link>
+            }
+            {this.props.loggedAccount === '' ? null :
+            <Link to='/history'>                 
+              
+              <NavItem>
+              <NavLink style={{fontWeight : '400',fontSize: '24px',  color : 'antiqueWhite'}}> history </NavLink>  
+            </NavItem>
+              </Link>
+}
+            
+              
+              { this.props.admin === 'admin' ?
               <Link to='/manage-movie' >
+              
               <NavItem>
                 <NavLink style={{fontWeight : '400', fontSize: '24px', color : 'antiqueWhite'}}>Admin</NavLink>
               </NavItem>
-              </Link>
+              </Link> : null }
               
+
+
               {this.props.loggedAccount !== '' ? null
               :
               <Link to='/login'>
@@ -76,20 +105,23 @@ class NavBioskop extends React.Component {
                 <DropdownToggle style={{fontWeight : '400',fontSize: '24px', color : 'antiqueWhite'}} nav caret>
                   {this.props.loggedAccount}
                 </DropdownToggle>
+
+                {
+                this.props.loggedAccount === '' ? null :
                 <DropdownMenu right>
                   <Link to='/edit-profile'>
                   <DropdownItem>
                     <i className='fa fa-user' style={{fontSize : '18px'}}> View Profile </i>
                   </DropdownItem>
                   </Link>
-                  <DropdownItem>
-                  <i className='fa fa-cart-arrow-down' style={{fontSize : '18px'}}> </i>  
-                  </DropdownItem>
+                  
                   <DropdownItem divider />
+                  <Link to='/'>
                   <DropdownItem  onClick={ this.onLoggedOut}>
                   <i className='fa fa-sign-out' style={{fontSize : '18px'}}> Log out </i>
                   </DropdownItem>
-                </DropdownMenu>
+                  </Link>
+                </DropdownMenu>}
               </UncontrolledDropdown>
             : null}
             </Nav>
@@ -102,8 +134,10 @@ class NavBioskop extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    loggedAccount : state.user.username
+    loggedAccount : state.user.username,
+    cartQty : state.add.count,
+    admin : state.user.role
   }
 }
 
-export default connect(mapStateToProps, {onLogout})(NavBioskop)
+export default connect(mapStateToProps,  {onLogout, addCart})(NavBioskop)

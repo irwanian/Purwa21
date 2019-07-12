@@ -16,12 +16,12 @@ onLogin = () => {
     var username = this.refs.name.value 
     var password = this.refs.password.value
     if(username === '' || password === ''){
-        alert('data wajib diisi')
+        this.setState({error : 'data wajib diisi'})
     }else{
         Axios.get(apiURL + '/users?username=' + username + '&password=' + password)
         .then((res)=> {
             if(res.data.length === 0){
-                alert('password or username invalid')
+                this.setState({error : 'password or username invalid'}) 
             }else{
                 this.props.registrationSuccess(res.data[0])
                 localStorage.setItem('keepRegistered', username)
@@ -52,8 +52,13 @@ onLogin = () => {
                         <h1>Login</h1>
                         <input type='text' style={{borderRadius : '25px'}} ref='name' placeholder='username' className='form-control mt-3' />
                         <input type='password' style={{borderRadius : '25px'}} ref= 'password' placeholder='password' className='form-control mt-3' />
-                        <input type='button' onClick={this.onLogin} style={{borderRadius : '25px'}} value='Login' className='mt-5 btn btn-primary' /> 
                         
+                        {this.state.error === '' ? null :
+                        <div className='alert alert-danger mt-4'>
+
+                        {this.state.error}
+                        </div>}
+                        <input type='button' onClick={this.onLogin} style={{borderRadius : '25px'}} value='Login' className='mt-2 btn btn-primary' /> 
                         
                     </Paper>
                     <p className='mt-3'>Belum punya akun?

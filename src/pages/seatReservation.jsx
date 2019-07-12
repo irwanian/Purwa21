@@ -6,7 +6,8 @@ import {apiURL} from './../support/apiURL'
 import {connect} from 'react-redux'
 import {Modal, ModalBody, ModalHeader} from 'reactstrap'
 import {Redirect} from 'react-router-dom'
-import {AddShoppingCart} from '@material-ui/icons'
+import {addCart} from './../redux/action/'
+
 
 class Reservation extends React.Component{
     state = {
@@ -68,6 +69,7 @@ class Reservation extends React.Component{
         var chosen = this.state.chosenSeat
         chosen.push(arr)
         this.setState({chosenSeat : chosen})
+        this.props.addCart()
     }
 
     cancelSeat = (arr) => {
@@ -187,8 +189,9 @@ class Reservation extends React.Component{
 const mapStateToProps = (state)=> {
     return{
         id : state.user.id,
-        cart : state.user.cart
+        cart : state.user.cart,
+        addCart : state.add.count
     }
 }
 
-export default connect(mapStateToProps)(Reservation)
+export default connect(mapStateToProps,{addCart})(Reservation)

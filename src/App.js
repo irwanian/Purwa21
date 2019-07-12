@@ -15,6 +15,7 @@ import Reservation from './pages/seatReservation'
 import EditProfile from './pages/editProfile'
 import Errorpage from './pages/errorpage'
 import Cart from './pages/cart'
+import History from './pages/history'
 
 
 
@@ -54,7 +55,8 @@ class App extends React.Component {
                     <Route path='/reservation' component={Reservation}/>  
                     <Route path='/edit-profile' component={EditProfile} />
                     <Route path='/cart' component={Cart} />
-                    <Route path='*' component={Errorpage} /> 
+                    <Route path='/history' component={History} /> 
+                    <Route path='*' component={Errorpage} />
                 </Switch>
             </div>
         )
