@@ -27,9 +27,17 @@ class History extends React.Component{
     }
 
     componentDidMount(){
+        // KETIKA CHECKOUT DI HALAMAN CART, DATA TIDAK LANGSUNG DI-PUSH KE TRANSACTION
+        // KARENA DATA AKAN MENJADI ARRAY OF ARRAY OF OBJECT [ [{}], [{}] ], DAN LEBIH SULIT UNTUK DIAKSES
+        // MAKA DATA DI HALAMAN CART DISIMPAN DI DALAM CART
+        // LALU DI HALAMAN HISTORY, SETELAH RENDER DATA DALAM CART DITRANSFER KE TRANSACTION
+        // DATA DALAM TRANSACTION BERUPA ARRAY OF OBJECT, SEHINGGA LEBIH MUDAH DIAKSES
+        // TAPI DATA OTOMATIS HILANG SETELAH REFRESH
+
         Axios.get(apiURL + '/users/' + this.props.id)
         .then((res)=>{
             this.setState({transaction : res.data.cart})
+            var transaksi = this.state
         })
         .catch((err)=>{
 

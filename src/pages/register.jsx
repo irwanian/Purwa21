@@ -49,7 +49,7 @@ class Register extends Component {
                     if(res.data.length > 0){
                         this.setState({error : 'Username tidak dapat digunakan' ,loading : false})
                     }else{
-                        var obj = {username : username , password : password}
+                        var obj = {username : username , password : password, role : "user", cart : [], transaction : []}
                         Axios.post('http://localhost:2000/users' , obj)
                         .then((res) => {
                             console.log(res.data)

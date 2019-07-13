@@ -1,7 +1,10 @@
 const INITIAL_STATE = 
 {   id : 0,
     username : '',
-    password : ''
+    password : '',
+    role : 'user',
+    cart : [],
+    transaction : []
 }
 
 export default (state = INITIAL_STATE, action) => {
